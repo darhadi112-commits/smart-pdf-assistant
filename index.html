@@ -7,12 +7,29 @@
 <title>ReactionRush Pro – How Fast Are You?</title>
 
 <!-- ============================================================
-     PASTE YOUR GOOGLE ADSENSE OR MONETAG SCRIPT HERE
-     Example AdSense:
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-     Example Monetag / Propeller Ads:
-     <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vlservo.com',YOUR_ZONE_ID,document.createElement('script'))</script>
+     MONETAG AD SCRIPT — Zone ID: 11171395
+     Domain: 5gvci.com
      ============================================================ -->
+
+<!-- Monetag Banner/Display Ad Tag (loads ad units by zone) -->
+<script async src="https://5gvci.com/act/files/tag.min.js?z=11171395"></script>
+
+<!-- Monetag Push Notification Service Worker Registration
+     NOTE: You must also upload service-worker.js to your root folder.
+     Contents of service-worker.js:
+       self.options = { "domain": "5gvci.com", "zoneId": 11171395 }
+       self.lary = ""
+       importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw')
+     ============================================================ -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(function(reg) { console.log('Monetag SW registered:', reg.scope); })
+        .catch(function(err) { console.warn('SW registration failed:', err); });
+    });
+  }
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -670,15 +687,15 @@ html, body {
      Recommended size: 320x50 (mobile banner)
 ══════════════════════════════════════════════════ -->
 <div class="ad-banner ad-top">
-  <div class="ad-banner-label">📢 Advertisement — 320×50 Banner Goes Here</div>
-  <!-- PASTE TOP BANNER AD CODE HERE -->
-  <!--
-  <ins class="adsbygoogle"
-       style="display:inline-block;width:320px;height:50px"
-       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-       data-ad-slot="XXXXXXXXXX"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  -->
+  <!-- MONETAG TOP BANNER — Zone: 11171395 -->
+  <div id="monetag-ad-top" style="display:flex;align-items:center;justify-content:center;min-height:60px;width:100%">
+    <ins class="monetag-ad"
+         data-zone="11171395"
+         data-type="banner"
+         data-width="320"
+         data-height="50"></ins>
+    <script>(self.monetagAds = self.monetagAds || []).push({ zone: 11171395, type: 'banner', width: 320, height: 50 });</script>
+  </div>
 </div>
 
 <div class="page-wrap">
@@ -755,15 +772,15 @@ html, body {
        Recommended size: 320x100 (large mobile banner)
   ══════════════════════════════════════════════════ -->
   <div class="ad-banner ad-bottom">
-    <div class="ad-banner-label">📢 Advertisement — 320×100 Banner Goes Here</div>
-    <!-- PASTE BOTTOM BANNER AD CODE HERE -->
-    <!--
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:320px;height:100px"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="XXXXXXXXXX"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    -->
+    <!-- MONETAG BOTTOM BANNER — Zone: 11171395 -->
+    <div id="monetag-ad-bottom" style="display:flex;align-items:center;justify-content:center;min-height:100px;width:100%">
+      <ins class="monetag-ad"
+           data-zone="11171395"
+           data-type="banner"
+           data-width="320"
+           data-height="100"></ins>
+      <script>(self.monetagAds = self.monetagAds || []).push({ zone: 11171395, type: 'banner', width: 320, height: 100 });</script>
+    </div>
   </div>
 
 </div><!-- end page-wrap -->
