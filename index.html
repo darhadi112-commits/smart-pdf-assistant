@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="Test your reaction speed! Play the fastest reaction time game and challenge your friends.">
+<title>ReactionRush Pro – How Fast Are You?</title>
+
+<!-- ============================================================
+     PASTE YOUR GOOGLE ADSENSE OR MONETAG SCRIPT HERE
+     Example AdSense:
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+     Example Monetag / Propeller Ads:
+     <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('vlservo.com',YOUR_ZONE_ID,document.createElement('script'))</script>
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+:root {
+  --bg:        #06060f;
+  --bg2:       #0d0d1f;
+  --card:      #10102a;
+  --card2:     #14143a;
+  --border:    #1e1e4a;
+  --border2:   #2a2a60;
+  --neon:      #00f5ff;
+  --neon2:     #bf5fff;
+  --neon3:     #ff3dff;
+  --green:     #00e676;
+  --red:       #ff1744;
+  --yellow:    #ffea00;
+  --orange:    #ff9100;
+  --text:      #e8e8ff;
+  --text2:     #8888cc;
+  --glow-c:    rgba(0,245,255,.18);
+  --glow-g:    rgba(0,230,118,.22);
+  --glow-r:    rgba(255,23,68,.22);
+}
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+.orb { font-family: 'Orbitron', monospace; }
+
+/* ═══════════════════════════════════════════════
+   LAYOUT WRAPPER
+═══════════════════════════════════════════════ */
+.page-wrap {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════
+   AD BANNERS
+═══════════════════════════════════════════════ */
+.ad-banner {
+  width: 100%;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text2);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  min-height: 60px;
+  position: relative;
+  overflow: hidden;
+}
+.ad-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255,255,255,.015) 10px,
+    rgba(255,255,255,.015) 20px
+  );
+}
+.ad-banner-label {
+  position: relative;
+  z-index: 1;
+  padding: 8px 16px;
+  border: 1px dashed var(--border2);
+  border-radius: 6px;
+  font-size: 10px;
+  color: var(--text2);
+}
+/* ── TOP AD ── Place your 320x50 or responsive banner inside .ad-top ── */
+.ad-top {
+  border-top: 1px solid var(--border);
+}
+/* ── BOTTOM AD ── Place your 320x100 or responsive banner inside .ad-bottom ── */
+.ad-bottom {
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
+.site-header {
+  text-align: center;
+  padding: 28px 20px 20px;
+  position: relative;
+}
+.header-glow {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 100px;
+  background: radial-gradient(ellipse, rgba(0,245,255,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.logo {
+  font-size: clamp(26px, 7vw, 42px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--neon) 0%, var(--neon2) 50%, var(--neon3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+.logo-sub {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--text2);
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════
+   STAT PILLS
+═══════════════════════════════════════════════ */
+.stats-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.stat-pill {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.stat-pill b {
+  color: var(--neon);
+  font-size: 13px;
+}
+
+/* ═══════════════════════════════════════════════
+   GAME CARD
+═══════════════════════════════════════════════ */
+.game-wrap {
+  padding: 0 14px;
+}
+.game-card {
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1.5px solid var(--border2);
+  box-shadow: 0 0 30px rgba(0,245,255,.07), 0 8px 32px rgba(0,0,0,.4);
+  position: relative;
+}
+
+/* ── States ── */
+.game-card[data-state="idle"]   { background: var(--card2); }
+.game-card[data-state="wait"]   { background: #ffffff; }
+.game-card[data-state="go"]     { background: #00c853; box-shadow: 0 0 60px rgba(0,200,83,.45), 0 0 120px rgba(0,200,83,.2); border-color: #00e676; }
+.game-card[data-state="result"] { background: var(--card2); }
+.game-card[data-state="early"]  { background: #1a0008; border-color: var(--red); box-shadow: 0 0 40px rgba(255,23,68,.3); }
+
+.game-inner {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 24px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  position: relative;
+  transition: background .15s, box-shadow .15s;
+}
+
+/* ── Idle / Start ── */
+.start-icon { font-size: 52px; margin-bottom: 14px; }
+.start-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.start-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 280px;
+  margin-bottom: 24px;
+}
+.start-btn {
+  padding: 15px 40px;
+  background: linear-gradient(135deg, var(--neon) 0%, var(--neon2) 100%);
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #000;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: .5px;
+  transition: .15s;
+  box-shadow: 0 0 20px rgba(0,245,255,.3);
+  touch-action: manipulation;
+  pointer-events: all;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 0 32px rgba(0,245,255,.45); }
+
+/* ── Wait ── */
+.wait-label {
+  font-size: clamp(20px, 6vw, 32px);
+  font-weight: 700;
+  color: #334;
+  pointer-events: none;
+}
+.wait-sub {
+  font-size: 13px;
+  color: #778;
+  margin-top: 8px;
+  pointer-events: none;
+}
+
+/* ── Go ── */
+.go-label {
+  font-size: clamp(32px, 10vw, 56px);
+  font-weight: 900;
+  color: #fff;
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(255,255,255,.5);
+  pointer-events: none;
+}
+.go-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,.75);
+  margin-top: 8px;
+  pointer-events: none;
+}
+
+/* ── Result ── */
+.result-ms {
+  font-size: clamp(52px, 14vw, 88px);
+  font-weight: 900;
+  font-family: 'Orbitron', monospace;
+  color: var(--neon);
+  text-shadow: 0 0 24px var(--glow-c);
+  pointer-events: none;
+  line-height: 1;
+}
+.result-unit {
+  font-size: 18px;
+  color: var(--text2);
+  margin-top: 2px;
+  pointer-events: none;
+}
+.result-label {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 10px;
+  pointer-events: none;
+}
+.result-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  pointer-events: all;
+}
+.btn-again {
+  padding: 12px 26px;
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: .15s;
+  touch-action: manipulation;
+}
+.btn-again:hover { transform: translateY(-2px); }
+.btn-share {
+  padding: 12px 20px;
+  background: #25d366;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: .15s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  touch-action: manipulation;
+}
+.btn-share:hover { transform: translateY(-2px); background: #1ebe5d; }
+
+/* ── Early ── */
+.early-label {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: 900;
+  color: var(--red);
+  text-shadow: 0 0 20px rgba(255,23,68,.5);
+  pointer-events: none;
+}
+.early-sub {
+  font-size: 14px;
+  color: #ff8099;
+  margin-top: 8px;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   NAME ENTRY MODAL (for leaderboard save)
+═══════════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--card2);
+  border: 1.5px solid var(--border2);
+  border-radius: 22px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0,245,255,.1);
+}
+.modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.modal-sub {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 20px;
+}
+.modal-score-display {
+  font-size: 40px;
+  font-weight: 900;
+  font-family: 'Orbitron', monospace;
+  color: var(--neon);
+  margin-bottom: 20px;
+  text-shadow: 0 0 16px var(--glow-c);
+}
+.modal-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 2px solid var(--border2);
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-size: 16px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  outline: none;
+  transition: .2s;
+  margin-bottom: 12px;
+}
+.modal-input:focus { border-color: var(--neon); box-shadow: 0 0 0 3px rgba(0,245,255,.12); }
+.modal-input::placeholder { color: #555; }
+.modal-save-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--neon), var(--neon2));
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: .15s;
+  margin-bottom: 8px;
+}
+.modal-save-btn:hover { transform: translateY(-1px); }
+.modal-skip {
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  font-family: 'Inter', sans-serif;
+}
+.modal-skip:hover { color: var(--text); }
+
+/* ═══════════════════════════════════════════════
+   LEADERBOARD
+═══════════════════════════════════════════════ */
+.section-wrap {
+  padding: 20px 14px 0;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.clear-btn {
+  font-size: 11px;
+  color: var(--text2);
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: .15s;
+}
+.clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+.lb-card {
+  background: var(--card);
+  border: 1.5px solid var(--border2);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+}
+.lb-empty {
+  padding: 32px;
+  text-align: center;
+  color: var(--text2);
+  font-size: 13px;
+}
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.lb-row:last-child { border-bottom: none; }
+.lb-row:hover { background: var(--card2); }
+.lb-row.lb-new { background: rgba(0,245,255,.06); }
+.lb-rank {
+  font-size: 20px;
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.lb-info { flex: 1; min-width: 0; }
+.lb-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lb-date {
+  font-size: 10px;
+  color: var(--text2);
+  margin-top: 1px;
+}
+.lb-ms {
+  font-family: 'Orbitron', monospace;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--neon);
+  flex-shrink: 0;
+}
+.lb-badge {
+  font-size: 9px;
+  background: var(--neon);
+  color: #000;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   WHATSAPP SHARE SECTION
+═══════════════════════════════════════════════ */
+.share-card {
+  background: linear-gradient(135deg, #0a2a14 0%, #0d1f0d 100%);
+  border: 1.5px solid #1a4a2a;
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+}
+.share-icon { font-size: 36px; flex-shrink: 0; }
+.share-info { flex: 1; }
+.share-title { font-size: 15px; font-weight: 700; color: #e8ffe8; margin-bottom: 3px; }
+.share-sub { font-size: 12px; color: #6a8; line-height: 1.5; }
+.wa-btn {
+  padding: 11px 20px;
+  background: #25d366;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: .15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.wa-btn:hover { background: #1ebe5d; transform: translateY(-1px); }
+
+/* ═══════════════════════════════════════════════
+   RATING BANDS
+═══════════════════════════════════════════════ */
+.bands-card {
+  background: var(--card);
+  border: 1.5px solid var(--border2);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.band-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.band-row:last-child { border-bottom: none; }
+.band-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.band-range { color: var(--text2); width: 90px; flex-shrink: 0; }
+.band-label { color: var(--text); font-weight: 600; flex: 1; }
+.band-tag {
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+.footer {
+  text-align: center;
+  padding: 24px 16px 8px;
+  font-size: 11px;
+  color: #333;
+}
+
+/* ═══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card2);
+  border: 1px solid var(--neon);
+  border-radius: 12px;
+  padding: 10px 22px;
+  font-size: 13px;
+  color: var(--neon);
+  z-index: 9999;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 0 20px rgba(0,245,255,.2);
+  animation: toastIn .28s ease-out;
+}
+@keyframes toastIn {
+  from { opacity:0; transform: translateX(-50%) translateY(10px); }
+  to   { opacity:1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════
+   PULSE ANIMATION ON GO STATE
+═══════════════════════════════════════════════ */
+@keyframes pulseBg {
+  0%,100% { box-shadow: 0 0 60px rgba(0,200,83,.45), 0 0 120px rgba(0,200,83,.2); }
+  50%     { box-shadow: 0 0 80px rgba(0,200,83,.7),  0 0 160px rgba(0,200,83,.35); }
+}
+.game-card[data-state="go"] { animation: pulseBg 1s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 400px) {
+  .share-card { flex-direction: column; text-align: center; }
+  .result-actions { flex-direction: column; align-items: stretch; }
+  .btn-again, .btn-share { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     TOP AD BANNER
+     REPLACE the content inside .ad-top with your
+     actual AdSense / Monetag banner ad unit code.
+     Recommended size: 320x50 (mobile banner)
+══════════════════════════════════════════════════ -->
+<div class="ad-banner ad-top">
+  <div class="ad-banner-label">📢 Advertisement — 320×50 Banner Goes Here</div>
+  <!-- PASTE TOP BANNER AD CODE HERE -->
+  <!--
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:320px;height:50px"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
+</div>
+
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <div class="site-header">
+    <div class="header-glow"></div>
+    <div class="logo orb">REACTION<span style="color:var(--neon2)">RUSH</span></div>
+    <div class="logo-sub">How Fast Are You?</div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-pill">⚡ Best <b id="statBest">—</b></div>
+    <div class="stat-pill">🎮 Plays <b id="statPlays">0</b></div>
+    <div class="stat-pill">🏆 Rank <b id="statRank">—</b></div>
+  </div>
+
+  <!-- ── GAME CARD ── -->
+  <div class="game-wrap">
+    <div class="game-card" id="gameCard" data-state="idle">
+      <div class="game-inner" id="gameInner" onclick="handleClick()">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LEADERBOARD ── -->
+  <div class="section-wrap">
+    <div class="section-head">
+      <div class="section-title">🏅 Top 5 Leaderboard</div>
+      <button class="clear-btn" onclick="clearLeaderboard()">Clear All</button>
+    </div>
+    <div class="lb-card" id="lbCard">
+      <div class="lb-empty">Play your first round to appear here!</div>
+    </div>
+  </div>
+
+  <!-- ── WHATSAPP CHALLENGE SHARE ── -->
+  <div class="section-wrap" style="margin-top:16px">
+    <div class="section-title" style="margin-bottom:12px">📣 Challenge Friends</div>
+    <div class="share-card">
+      <div class="share-icon">💬</div>
+      <div class="share-info">
+        <div class="share-title">Beat My Score!</div>
+        <div class="share-sub">Share your reaction time & challenge friends on WhatsApp</div>
+      </div>
+      <button class="wa-btn" onclick="shareWhatsApp()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Challenge
+      </button>
+    </div>
+  </div>
+
+  <!-- ── RATING BANDS ── -->
+  <div class="section-wrap" style="margin-top:20px">
+    <div class="section-title" style="margin-bottom:12px">⚡ Reaction Speed Ratings</div>
+    <div class="bands-card">
+      <div class="band-row"><div class="band-dot" style="background:#ff9100"></div><div class="band-range">&lt; 150 ms</div><div class="band-label">Elite Reflex</div><div class="band-tag" style="background:#ff9100;color:#000">LEGEND</div></div>
+      <div class="band-row"><div class="band-dot" style="background:#00f5ff"></div><div class="band-range">150–220 ms</div><div class="band-label">Super Fast</div><div class="band-tag" style="background:#00f5ff;color:#000">PRO</div></div>
+      <div class="band-row"><div class="band-dot" style="background:#00e676"></div><div class="band-range">220–300 ms</div><div class="band-label">Above Average</div><div class="band-tag" style="background:#00e676;color:#000">GOOD</div></div>
+      <div class="band-row"><div class="band-dot" style="background:#bf5fff"></div><div class="band-range">300–400 ms</div><div class="band-label">Average Human</div><div class="band-tag" style="background:#bf5fff;color:#fff">NORMAL</div></div>
+      <div class="band-row"><div class="band-dot" style="background:#ff1744"></div><div class="band-range">&gt; 400 ms</div><div class="band-label">Keep Training!</div><div class="band-tag" style="background:#ff1744;color:#fff">SLOW</div></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">ReactionRush Pro · Built for speed · © 2025</div>
+
+  <!-- ══════════════════════════════════════════════════
+       BOTTOM AD BANNER
+       REPLACE the content inside .ad-bottom with your
+       actual AdSense / Monetag banner ad unit code.
+       Recommended size: 320x100 (large mobile banner)
+  ══════════════════════════════════════════════════ -->
+  <div class="ad-banner ad-bottom">
+    <div class="ad-banner-label">📢 Advertisement — 320×100 Banner Goes Here</div>
+    <!-- PASTE BOTTOM BANNER AD CODE HERE -->
+    <!--
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:320px;height:100px"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+  </div>
+
+</div><!-- end page-wrap -->
+
+<!-- NAME SAVE MODAL -->
+<div class="modal-overlay" id="saveModal">
+  <div class="modal-box">
+    <div class="modal-title">🏆 Save Your Score!</div>
+    <div class="modal-sub">Enter your name to appear on the leaderboard</div>
+    <div class="modal-score-display" id="modalScore">—</div>
+    <input class="modal-input" id="modalName" type="text" placeholder="Your name…" maxlength="18"
+      onkeydown="if(event.key==='Enter')saveScore()">
+    <button class="modal-save-btn" onclick="saveScore()">Save to Leaderboard ⚡</button>
+    <button class="modal-skip" onclick="closeModal()">Skip, just play again</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════════════
+const SITE_URL   = window.location.href;   // auto-detects your URL
+const LB_KEY     = 'rr_leaderboard_v1';
+const PLAYS_KEY  = 'rr_plays';
+const MIN_DELAY  = 1200;   // ms before green
+const MAX_DELAY  = 4000;
+
+// ═══════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════
+let state       = 'idle';   // idle | wait | go | result | early | blocked
+let startTime   = 0;
+let lastResult  = 0;
+let pendingTimer = null;
+let earlyLocked  = false;   // blocks early-tap detection right after button click
+
+// ═══════════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  renderIdle();
+  renderLeaderboard();
+  updateStats();
+});
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER STATES
+// ═══════════════════════════════════════════════════════════
+function setState(s) {
+  state = s;
+  document.getElementById('gameCard').dataset.state = s;
+}
+
+function renderIdle() {
+  setState('idle');
+  const inner = document.getElementById('gameInner');
+  inner.innerHTML = `
+    <div class="start-icon">⚡</div>
+    <div class="start-title">Ready to Test?</div>
+    <div class="start-desc">
+      Wait for the screen to flash <b style="color:#00e676">green</b>,
+      then tap anywhere as fast as you can!
+    </div>
+    <button class="start-btn" id="startBtn">▶ Start Round</button>`;
+  document.getElementById('startBtn').addEventListener('click', handleStart);
+}
+
+function renderWait() {
+  setState('wait');
+  document.getElementById('gameInner').innerHTML = `
+    <div class="wait-label">Get Ready…</div>
+    <div class="wait-sub">Don't tap yet!</div>`;
+}
+
+function renderGo() {
+  setState('go');
+  document.getElementById('gameInner').innerHTML = `
+    <div class="go-label">TAP!</div>
+    <div class="go-sub">Anywhere on the screen</div>`;
+}
+
+function renderResult(ms) {
+  setState('result');
+  const { emoji, label, color } = getRating(ms);
+  document.getElementById('gameInner').innerHTML = `
+    <div class="result-ms">${ms}</div>
+    <div class="result-unit">milliseconds</div>
+    <div class="result-label" style="color:${color}">${emoji} ${label}</div>
+    <div class="result-actions">
+      <button class="btn-again" onclick="handleAgain()">🔄 Try Again</button>
+      <button class="btn-share" onclick="shareWhatsApp()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Share
+      </button>
+    </div>`;
+}
+
+function renderEarly() {
+  setState('early');
+  document.getElementById('gameInner').innerHTML = `
+    <div class="early-label">⚠️ Too Early!</div>
+    <div class="early-sub">Wait for the GREEN screen before tapping</div>`;
+  sndBad();
+  setTimeout(() => renderIdle(), 1600);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CLICK HANDLER (central dispatcher)
+// ═══════════════════════════════════════════════════════════
+function handleClick() {
+  if (state === 'go')   { recordTap(); return; }
+  if (state === 'wait' && !earlyLocked) { clearTimeout(pendingTimer); renderEarly(); }
+  // idle / result / early / blocked → do nothing (buttons handle those)
+}
+
+function handleStart(e) {
+  e.stopPropagation();
+  // Lock early-tap detection for 400 ms so this click doesn't bleed through
+  earlyLocked = true;
+  setTimeout(() => { earlyLocked = false; }, 400);
+  beginWait();
+}
+
+function handleAgain() {
+  renderIdle();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  GAME FLOW
+// ═══════════════════════════════════════════════════════════
+function beginWait() {
+  renderWait();
+  const delay = MIN_DELAY + Math.random() * (MAX_DELAY - MIN_DELAY);
+  pendingTimer = setTimeout(() => {
+    renderGo();
+    startTime = performance.now();
+  }, delay);
+}
+
+function recordTap() {
+  const ms = Math.round(performance.now() - startTime);
+  lastResult = ms;
+
+  // Update play count
+  const plays = (parseInt(localStorage.getItem(PLAYS_KEY) || '0')) + 1;
+  localStorage.setItem(PLAYS_KEY, plays);
+
+  renderResult(ms);
+  sndGood(ms);
+  updateStats();
+
+  // Show save modal after short delay
+  setTimeout(() => openModal(ms), 900);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RATING
+// ═══════════════════════════════════════════════════════════
+function getRating(ms) {
+  if (ms < 150) return { emoji:'🏆', label:'LEGENDARY!',     color:'#ff9100' };
+  if (ms < 220) return { emoji:'⚡', label:'SUPER FAST!',    color:'#00f5ff' };
+  if (ms < 300) return { emoji:'🔥', label:'ABOVE AVERAGE',  color:'#00e676' };
+  if (ms < 400) return { emoji:'👍', label:'AVERAGE',        color:'#bf5fff' };
+  return              { emoji:'🐢', label:'KEEP TRAINING!', color:'#ff1744' };
+}
+
+// ═══════════════════════════════════════════════════════════
+//  LEADERBOARD  (localStorage, top 5, sorted ASC by ms)
+// ═══════════════════════════════════════════════════════════
+function getLB() {
+  try { return JSON.parse(localStorage.getItem(LB_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function setLB(data) {
+  localStorage.setItem(LB_KEY, JSON.stringify(data));
+}
+
+function addToLB(name, ms) {
+  const lb = getLB();
+  lb.push({ name: name.trim() || 'Anonymous', ms, date: new Date().toLocaleDateString() });
+  lb.sort((a, b) => a.ms - b.ms);          // lower = better
+  const top5 = lb.slice(0, 5);
+  setLB(top5);
+  return top5;
+}
+
+function renderLeaderboard(highlightMs) {
+  const lb = getLB();
+  const card = document.getElementById('lbCard');
+  const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+  if (!lb.length) {
+    card.innerHTML = '<div class="lb-empty">Play your first round to appear here!</div>';
+    return;
+  }
+  card.innerHTML = lb.map((e, i) => {
+    const isNew = highlightMs && e.ms === highlightMs;
+    return `<div class="lb-row ${isNew ? 'lb-new' : ''}">
+      <div class="lb-rank">${medals[i] || (i+1)}</div>
+      <div class="lb-info">
+        <div class="lb-name">${escHtml(e.name)}</div>
+        <div class="lb-date">${e.date}</div>
+      </div>
+      <div class="lb-ms">${e.ms}ms</div>
+      ${isNew ? '<div class="lb-badge">NEW</div>' : ''}
+    </div>`;
+  }).join('');
+}
+
+function clearLeaderboard() {
+  if (!confirm('Clear the entire leaderboard?')) return;
+  localStorage.removeItem(LB_KEY);
+  renderLeaderboard();
+  updateStats();
+  toast('Leaderboard cleared');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  STATS
+// ═══════════════════════════════════════════════════════════
+function updateStats() {
+  const plays = parseInt(localStorage.getItem(PLAYS_KEY) || '0');
+  const lb = getLB();
+  document.getElementById('statPlays').textContent = plays;
+  if (lb.length) {
+    // Best is first (sorted ASC)
+    document.getElementById('statBest').textContent = lb[0].ms + 'ms';
+    // Rank of personal best among lb
+    document.getElementById('statRank').textContent = '#1 / ' + lb.length;
+  } else {
+    document.getElementById('statBest').textContent = '—';
+    document.getElementById('statRank').textContent = '—';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SAVE MODAL
+// ═══════════════════════════════════════════════════════════
+function openModal(ms) {
+  document.getElementById('modalScore').textContent = ms + 'ms';
+  document.getElementById('modalName').value = localStorage.getItem('rr_name') || '';
+  document.getElementById('saveModal').classList.add('open');
+  setTimeout(() => document.getElementById('modalName').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('saveModal').classList.remove('open');
+}
+
+function saveScore() {
+  const nameEl = document.getElementById('modalName');
+  const name = nameEl.value.trim() || 'Anonymous';
+  localStorage.setItem('rr_name', name);
+  addToLB(name, lastResult);
+  renderLeaderboard(lastResult);
+  updateStats();
+  closeModal();
+  toast('Score saved! 🏆');
+}
+
+// Close modal on overlay click
+document.getElementById('saveModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ═══════════════════════════════════════════════════════════
+//  WHATSAPP SHARE
+// ═══════════════════════════════════════════════════════════
+function shareWhatsApp() {
+  const ms = lastResult || (getLB()[0] ? getLB()[0].ms : null);
+  if (!ms) {
+    toast('Play a round first!');
+    return;
+  }
+  const { emoji, label } = getRating(ms);
+  const msg = `${emoji} I just got a reaction speed of *${ms}ms* on ReactionRush!\n\nRating: *${label}*\n\n🎮 Can you beat me? Test your speed here:\n${SITE_URL}`;
+  const url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  AUDIO (Web Audio API — no files needed)
+// ═══════════════════════════════════════════════════════════
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playTone(freq, dur, type = 'sine', vol = 0.12) {
+  try {
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+    o.frequency.value = freq; o.type = type;
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    o.start(); o.stop(audioCtx.currentTime + dur);
+  } catch(e) {}
+}
+function sndGood(ms) {
+  if (ms < 200) {
+    // Legendary chord
+    [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, .12, 'sine', .1), i * 60));
+  } else {
+    playTone(880, .08); setTimeout(() => playTone(1100, .12), 60);
+  }
+}
+function sndBad() { playTone(220, .2, 'sawtooth', .1); }
+
+// ═══════════════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════════════
+function toast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2200);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  UTILITY
+// ═══════════════════════════════════════════════════════════
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Boot render
+renderIdle();
+</script>
+</body>
+</html>
